@@ -1,0 +1,43 @@
+server:
+  port: 9999
+spring:
+  profiles:
+    active: dev
+  application:
+    name: vtm_gateway
+  cloud:
+    nacos:
+      server-addr: http://119.91.200.72:8848
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://119.91.200.72:3306/vtmer_interface_management?characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: vtmer2020
+  gateway:
+    routes: #配置路由规则
+      - id: vtm_mission
+        uri: lb://vtm_mission
+        predicates:
+          - Path=/mission/**
+        filters:
+          - StripPrefix=1
+
+      - id: vtm_comment
+        uri: lb://vtm_comment
+        predicates:
+          - Path=/comment/**
+        filters:
+          - StripPrefix=1
+
+      - id: vtm_resource
+        uri: lb://vtm_resource
+        predicates:
+          - Path=/resource/**
+        filters:
+          - StripPrefix=1
+    discovery:
+      locator:
+        enabled: true #开启从注册中心动态创建路由的功能
+        lower-case-service-id: true #使用小写服务名，默认是大写
+

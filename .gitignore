@@ -1,0 +1,6 @@
+# Project exclude paths
+/vtm_comment/target/
+/vtm_common/target/
+/vtm_gateway/target/
+/vtm_mission/target/
+/vtm_resource/target/
